@@ -14,14 +14,13 @@ namespace Dwarverria.Systems
 {
     public class UnderGroundWorldSystem : ModSystem
     {
-
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
         {
-            int genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Surface Caves"));
+            int genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Micro Biomes"));
 
-            if(genIndex != -1)
+            if (genIndex != -1)
             {
-                tasks[genIndex] = new UndergroundWorldGenPass();
+                tasks.Insert(genIndex + 1, new UndergroundWorldGenPass());
             }
         }
 
@@ -31,30 +30,41 @@ namespace Dwarverria.Systems
 
             protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
             {
-                progress.Message = "Digging Deep...";
+                progress.Message = "Forging The World";
 
-                for (int x = 50; x < Main.maxTilesX - 50; x++)
+                int topBorder = (int)(Main.worldSurface - 30);
+                int spawnY = (int)(Main.worldSurface + 50);
+                int spawnX = (int)(Main.maxTilesX / 2);
+
+                Main.spawnTileX = spawnX;
+                Main.spawnTileY = spawnY;
+
+                for (int x = -5; x <= 5; x++)
                 {
-                    progress.Set(x / (float)Main.maxTilesX);
-
-                    int surfaceStart = 0;
-                    int surfaceEnd = Main.maxTilesY;
-
-                    for (int y = surfaceStart + 50; y < surfaceEnd - 50; y++)
+                    for (int y = -5; y <= 5; y++)
                     {
-                        Tile tile = Framing.GetTileSafely(x, y);
-                        tile.ClearEverything();
+                        int worldX = spawnX + x;
+                        int worldY = spawnY + y;
 
-                        if (WorldGen.genRand.NextFloat() < 0.1f)
-                        {
-                            continue;
-                        }
-                        tile.TileType = TileID.Stone;
-                        tile.HasTile = true;
-                        WorldGen.SquareTileFrame(x, y);
+                        WorldGen.KillTile(worldX, worldY, false, false, true);
+                        WorldGen.KillWall(worldX, worldY, false);
                     }
                 }
+
+                for (int x = 10; x < Main.maxTilesY - 70; x++)
+                {
+                    int y = topBorder;
+                    WorldGen.PlaceTile(x, y, TileID.ObsidianBrick, forced: true, mute: true);
+
+                    Tile tile = Framing.GetTileSafely(x, y);
+                    tile.HasTile = true;
+                    tile.TileType = TileID.ObsidianBrick;
+                    tile.IsActuated = false;
+                }
+
+
             }
         }
+
     }
 }
