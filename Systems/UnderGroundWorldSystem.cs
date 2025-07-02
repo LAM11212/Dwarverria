@@ -62,9 +62,31 @@ namespace Dwarverria.Systems
                     tile.IsActuated = false;
                 }
 
+                int chestX = spawnX + 2;
+                int chestY = spawnY;
+                for(int i = 0; i < 2; i++)
+                {
+                    WorldGen.PlaceTile(chestX + i, chestY + 1, TileID.ObsidianBrick, forced: true, mute: true);
+                }
+                int chestIndex = WorldGen.PlaceChest(chestX, chestY, style: 0);
+                if(chestIndex >= 0)
+                {
+                    Chest chest = Main.chest[chestIndex];
+
+                    chest.item[0].SetDefaults(ItemID.IronPickaxe);
+                    chest.item[0].stack = 1;
+
+                    chest.item[1].SetDefaults(ItemID.Torch);
+                    chest.item[1].stack = 999;
+
+                    chest.item[2].SetDefaults(ItemID.HealingPotion);
+                    chest.item[2].stack = 20;
+                }
+
+                WorldGen.PlaceTile(spawnX, spawnY + 1, TileID.Stone, forced: true, mute: true);
+                WorldGen.PlaceTile(spawnX, spawnY, TileID.Torches, forced: true, mute: true);
 
             }
         }
-
     }
 }
