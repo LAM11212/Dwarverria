@@ -9,6 +9,8 @@ using Terraria.ModLoader;
 using Terraria.WorldBuilding;
 using Terraria.GameContent.Generation;
 using Terraria.IO;
+using rail;
+using Mono.Cecil;
 
 namespace Dwarverria.Systems
 {
@@ -16,13 +18,27 @@ namespace Dwarverria.Systems
     {
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
         {
-            int genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Micro Biomes"));
+            int microBiomeIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Micro Biomes"));
+            int iceBiomeIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Surface Caves"));
+            int tunnelsIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Tunnels"));
 
-            if (genIndex != -1)
+            if (tunnelsIndex != -1)
             {
-                tasks.Insert(genIndex + 1, new UndergroundWorldGenPass());
+                tasks.RemoveAt(tunnelsIndex);
+            }
+
+            if (iceBiomeIndex != -1)
+            {
+                tasks[iceBiomeIndex] = new DwarverriaOverworld();
+            }
+            
+            if (microBiomeIndex != -1)
+            {
+                tasks.Insert(microBiomeIndex + 1, new UndergroundWorldGenPass());
             }
         }
+
+        
 
         private class UndergroundWorldGenPass : GenPass
         {
@@ -88,5 +104,30 @@ namespace Dwarverria.Systems
 
             }
         }
+        
+        private class DwarverriaOverworld : GenPass
+        {
+            public DwarverriaOverworld() : base("Dwarverria Overworld", 0.1f) { }
+
+            protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
+            {
+                progress.Message = "Forging The Overworld";
+
+                int spaceStartY = (int)(Main.maxTilesY * 0.07);
+                int surfaceStartY = (int)(Main.worldSurface);
+
+                for (int x = 0; x < Main.maxTilesX; x++)
+                {
+                    for(int y = spaceStartY; y < surfaceStartY; y++)
+                    {
+                        Tile tile = Framing.GetTileSafely(x, y);
+                        tile.HasTile = true;
+                        tile.TileType = TileID.Stone;
+                        tile.IsActuated = false;
+                    }
+                }
+            }
+        }
+        
     }
 }
