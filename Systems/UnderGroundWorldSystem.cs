@@ -11,6 +11,7 @@ using Terraria.GameContent.Generation;
 using Terraria.IO;
 using rail;
 using Mono.Cecil;
+using Microsoft.Xna.Framework;
 
 namespace Dwarverria.Systems
 {
@@ -124,6 +125,53 @@ namespace Dwarverria.Systems
                         tile.HasTile = true;
                         tile.TileType = TileID.Stone;
                         tile.IsActuated = false;
+                    }
+                }
+
+                int numberOfDiamonds = 250;
+                int numberOfRifts = 120;
+                /*
+                for(int i = 0; i < numberOfDiamonds; i++)
+                {
+                    int x = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
+                    int y = WorldGen.genRand.Next(spaceStartY, surfaceStartY);
+
+                    int xDirection = WorldGen.genRand.NextBool() ? 1 : -1;
+                    int yDirection = WorldGen.genRand.NextBool() ? 1 : -1;
+
+                    WorldGen.digTunnel(x, y, x + xDirection * 500, y + yDirection * 100, WorldGen.genRand.Next(4, 7), WorldGen.genRand.Next(16, 32), false);
+                }
+                */
+                for(int i = 0; i < numberOfRifts; i++)
+                {
+
+                    float radius = WorldGen.genRand.NextFloat(80, 160);
+                    float angle = WorldGen.genRand.NextFloat(0, MathHelper.TwoPi);
+
+                    Microsoft.Xna.Framework.Vector2 pos = new Vector2(
+                        WorldGen.genRand.Next(100, Main.maxTilesX - 100),
+                        WorldGen.genRand.Next(spaceStartY, surfaceStartY)
+                        );
+
+                    for (int step = 0; step < 100; step++)
+                    {
+                        angle += WorldGen.genRand.NextFloat(-0.2f, 0.2f);
+
+                        pos.X += (float)Math.Cos(angle) * 2f;
+                        pos.Y += (float)Math.Sin(angle) * 2f;
+
+                        int x = Math.Clamp((int)pos.X, 10, Main.maxTilesX - 10);
+                        int y = Math.Clamp((int)pos.Y, spaceStartY + 10, surfaceStartY - 10);
+
+                        WorldGen.TileRunner(
+                            x, y,                             // Location
+                            WorldGen.genRand.Next(3, 6),      // Strength (radius)
+                            WorldGen.genRand.Next(8, 16),     // Steps (size of the carved area)
+                            -1,                               // Type (idk what this does tbh)
+                            false,                            // add Tile 
+                            0, 0,                             // speed (x/y dont need it here)
+                            true                              // noYChange = false (set to true for no Y change confusing but thats how it works)
+                            );
                     }
                 }
             }
