@@ -1,1 +1,11 @@
+Items: {
+	MEGAPICK: {
+		DisplayName: M E G A P I C K
+		Tooltip: big pickaxe
+	}
 
+	MegaPick: {
+		DisplayName: Mega Pick
+		Tooltip: ""
+	}
+}

@@ -129,7 +129,7 @@ namespace Dwarverria.Systems
                 }
 
                 int numberOfDiamonds = 250;
-                int numberOfRifts = 120;
+                int numberOfRifts = 250;
                 /*
                 for(int i = 0; i < numberOfDiamonds; i++)
                 {
@@ -165,7 +165,7 @@ namespace Dwarverria.Systems
 
                         WorldGen.TileRunner(
                             x, y,                             // Location
-                            WorldGen.genRand.Next(3, 6),      // Strength (radius)
+                            WorldGen.genRand.Next(3, 9),      // Strength (radius)
                             WorldGen.genRand.Next(8, 16),     // Steps (size of the carved area)
                             -1,                               // Type (idk what this does tbh)
                             false,                            // add Tile 
