@@ -50,19 +50,14 @@ namespace Dwarverria.Content.Items.Tools.Pickaxes
             {
                 Microsoft.Xna.Framework.Point mouseTile = Main.MouseWorld.ToTileCoordinates();
 
-                if (!Framing.GetTileSafely(mouseTile.X, mouseTile.Y).HasTile)
-                {
-                    return false;
-                }
+                int radius = 3;
 
-                int radius = Random.Shared.Next(3, 6);
-
-                for (int x = 0; x < radius; x++)
+                for (int x = 0; x <= radius; x++)
                 {
-                    for (int y = 0; y < radius; y++)
+                    for (int y = 0; y <= radius; y++)
                     {
-                        int tileX = mouseTile.X + x - radius / 2;
-                        int tileY = mouseTile.Y + y - radius / 2;
+                        int tileX = mouseTile.X + x;
+                        int tileY = mouseTile.Y + y;
 
                         if (tileX >= 0 && tileX < Main.maxTilesX && tileY >= 0 && tileY < Main.maxTilesY)
                         {
