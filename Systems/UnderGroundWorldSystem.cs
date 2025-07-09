@@ -12,6 +12,7 @@ using Terraria.IO;
 using rail;
 using Mono.Cecil;
 using Microsoft.Xna.Framework;
+using Dwarverria.Content.Items.Tools.Pickaxes;
 
 namespace Dwarverria.Systems
 {
@@ -90,7 +91,7 @@ namespace Dwarverria.Systems
                 {
                     Chest chest = Main.chest[chestIndex];
 
-                    chest.item[0].SetDefaults(ItemID.IronPickaxe);
+                    chest.item[0].SetDefaults(ModContent.ItemType<MegaPick>());
                     chest.item[0].stack = 1;
 
                     chest.item[1].SetDefaults(ItemID.Torch);

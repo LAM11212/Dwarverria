@@ -50,11 +50,9 @@ namespace Dwarverria.Content.Items.Tools.Pickaxes
             {
                 Microsoft.Xna.Framework.Point mouseTile = Main.MouseWorld.ToTileCoordinates();
 
-                int radius = 3;
-
-                for (int x = 0; x <= radius; x++)
+                for (int x = -1; x <= 1; x++)
                 {
-                    for (int y = 0; y <= radius; y++)
+                    for (int y = -1; y <= 1; y++)
                     {
                         int tileX = mouseTile.X + x;
                         int tileY = mouseTile.Y + y;
