@@ -8,4 +8,16 @@ Items: {
 		DisplayName: Mega Pick
 		Tooltip: ""
 	}
+
+	Beer: {
+		DisplayName: Beer
+		Tooltip: ""
+	}
+}
+
+Buffs: {
+	BeerBuff: {
+		DisplayName: Beer Buff
+		Description: Mods.Dwarverria.Buffs.BeerBuff.Description
+	}
 }

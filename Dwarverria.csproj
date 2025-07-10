@@ -8,6 +8,8 @@
 		
 	</PropertyGroup>
 	<ItemGroup>
+	  <None Remove="Content\Items\Buffs\BeerBuff.png" />
+	  <None Remove="Content\Items\Potions\Beer.png" />
 	  <None Remove="Content\Items\Tools\Pickaxes\MEGAPICK.png" />
 	</ItemGroup>
 
@@ -15,7 +17,6 @@
 	<ItemGroup>
 	  <Folder Include="Assets\" />
 	  <Folder Include="Common\" />
-	  <Folder Include="Content\Items\Potions\" />
 	  <Folder Include="Content\Items\Weapons\" />
 	</ItemGroup>
 
